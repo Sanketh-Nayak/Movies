@@ -1,5 +1,5 @@
-const express = require('express');
-const {
+import express from "express";
+import {
   createReview,
   getMovieReviews,
   getMyReviews,
@@ -7,17 +7,17 @@ const {
   deleteReview,
   likeReview,
   reportReview,
-} = require('../controllers/review.controller');
-const protect = require('../middleware/auth.middleware');
+} from "../controllers/review.controller.js";
+import protect from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.get('/movie/:tmdbId', getMovieReviews);
-router.get('/me', protect, getMyReviews);
-router.post('/', protect, createReview);
-router.patch('/:reviewId', protect, updateReview);
-router.delete('/:reviewId', protect, deleteReview);
-router.post('/:reviewId/like', protect, likeReview);
-router.post('/:reviewId/report', protect, reportReview);
+router.get("/movie/:tmdbId", getMovieReviews);
+router.get("/me", protect, getMyReviews);
+router.post("/", protect, createReview);
+router.patch("/:reviewId", protect, updateReview);
+router.delete("/:reviewId", protect, deleteReview);
+router.post("/:reviewId/like", protect, likeReview);
+router.post("/:reviewId/report", protect, reportReview);
 
 module.exports = router;

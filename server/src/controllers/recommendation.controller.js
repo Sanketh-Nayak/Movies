@@ -1,11 +1,11 @@
-const WatchlistItem = require('../models/WatchlistItem');
-const tmdb = require('../services/tmdb.service');
+import WatchlistItem from "../models/WatchlistItem.js";
+import tmdb from "../services/tmdb.service.js";
 
 const getRecommendations = async (req, res, next) => {
   try {
     const watchedItems = await WatchlistItem.find({
       userId: req.user._id,
-      status: 'watched',
+      status: "watched",
     });
 
     const ratedItems = await WatchlistItem.find({
@@ -35,13 +35,13 @@ const getRecommendations = async (req, res, next) => {
     if (topGenres.length === 0) {
       const popular = await tmdb.getPopular(1);
       return res.json({
-        message: 'Watch and rate movies to get personalized recommendations',
+        message: "Watch and rate movies to get personalized recommendations",
         recommendations: popular.results.slice(0, 12),
       });
     }
 
     const watchlistIds = new Set(
-      (await WatchlistItem.find({ userId: req.user._id })).map((i) => i.tmdbId)
+      (await WatchlistItem.find({ userId: req.user._id })).map((i) => i.tmdbId),
     );
 
     const seen = new Set();

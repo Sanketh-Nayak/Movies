@@ -1,16 +1,19 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
-const errorHandler = require("./middleware/error.middleware");
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
 
-const authRoutes = require("./routes/auth.routes");
-const movieRoutes = require("./routes/movie.routes");
-const watchlistRoutes = require("./routes/watchlist.routes");
-const reviewRoutes = require("./routes/review.routes");
-const userRoutes = require("./routes/user.routes");
-const recommendationRoutes = require("./routes/recommendation.routes");
-const adminRoutes = require("./routes/admin.routes");
+import connectDB from "./config/db.js";
+import errorHandler from "./middleware/error.middleware.js";
+
+import authRoutes from "./routes/auth.routes.js";
+import movieRoutes from "./routes/movie.routes.js";
+import watchlistRoutes from "./routes/watchlist.routes.js";
+import reviewRoutes from "./routes/review.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import recommendationRoutes from "./routes/recommendation.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
+
+dotenv.config();
 
 const app = express();
 

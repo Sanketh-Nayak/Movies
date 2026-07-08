@@ -1,10 +1,10 @@
-const WatchlistItem = require('../models/WatchlistItem');
+import WatchlistItem from "../models//WatchlistItem.js";
 
 const addToWatchlist = async (req, res, next) => {
   try {
     const { tmdbId, title, posterPath, releaseYear, status, notes } = req.body;
     if (!tmdbId || !title) {
-      return res.status(400).json({ message: 'tmdbId and title are required' });
+      return res.status(400).json({ message: "tmdbId and title are required" });
     }
 
     const item = await WatchlistItem.findOneAndUpdate(
@@ -15,10 +15,10 @@ const addToWatchlist = async (req, res, next) => {
         title,
         posterPath: posterPath || null,
         releaseYear: releaseYear || null,
-        status: status || 'plan_to_watch',
-        notes: notes || '',
+        status: status || "plan_to_watch",
+        notes: notes || "",
       },
-      { upsert: true, new: true, runValidators: true }
+      { upsert: true, new: true, runValidators: true },
     );
 
     res.status(201).json(item);
@@ -49,18 +49,18 @@ const updateWatchlistItem = async (req, res, next) => {
     if (personalRating !== undefined) {
       updates.personalRating = personalRating;
     }
-    if (status === 'watched') {
+    if (status === "watched") {
       updates.watchedAt = new Date();
     }
 
     const item = await WatchlistItem.findOneAndUpdate(
       { userId: req.user._id, tmdbId: req.params.tmdbId },
       updates,
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!item) {
-      return res.status(404).json({ message: 'Watchlist item not found' });
+      return res.status(404).json({ message: "Watchlist item not found" });
     }
 
     res.json(item);
@@ -77,13 +77,18 @@ const removeFromWatchlist = async (req, res, next) => {
     });
 
     if (!item) {
-      return res.status(404).json({ message: 'Watchlist item not found' });
+      return res.status(404).json({ message: "Watchlist item not found" });
     }
 
-    res.json({ message: 'Removed from watchlist' });
+    res.json({ message: "Removed from watchlist" });
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { addToWatchlist, getMyWatchlist, updateWatchlistItem, removeFromWatchlist };
+module.exports = {
+  addToWatchlist,
+  getMyWatchlist,
+  updateWatchlistItem,
+  removeFromWatchlist,
+};
